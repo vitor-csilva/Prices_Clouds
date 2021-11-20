@@ -100,7 +100,6 @@ def search():
 
         current_query += 1
 
-    breakpoint()
     sql.insert_in_bulk_machine(machines_insert)
     systems_machine_insert = insert_foreing_key(systems_machine, machines_insert)
     sql.insert_in_bulk_system_machine(systems_machine_insert)
