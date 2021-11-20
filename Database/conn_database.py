@@ -12,7 +12,7 @@ class Machine(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     machine_name = Column(VARCHAR(256))
     memory       = Column(VARCHAR(256))
-    cpu          = Column(Integer)
+    cpu          = VARCHAR(VARCHAR(256))
     storage      = Column(VARCHAR(256))
     processor    = Column(VARCHAR(256))
     colection_data = Column(DateTime)
@@ -21,12 +21,17 @@ class Machine(Base):
 
 class SystemMachine(Base):
     __tablename__ = "system_machine"
-    id          = Column(Integer, primary_key=True, autoincrement=True)
-    machine_id  = Column(Integer, ForeignKey('machine.id'))
-    price       = Column(Numeric)
-    region      = Column(VARCHAR(256))
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    machine_id = Column(Integer, ForeignKey('machine.id'))
+    price = Column(VARCHAR(256))
+    region = Column(VARCHAR(256))
     system_name = Column(VARCHAR(256))
-    machine     = relationship("Machine", back_populates="systems_machine")
+    description = Column(VARCHAR(256))
+    type_machine = Column(VARCHAR(256))
+    lease_contract_length = Column(VARCHAR(256))
+    offering_class = Column(VARCHAR(256))
+    purchase_option = Column(VARCHAR(256))
+    machine = relationship("Machine", back_populates="systems_machine")
 
 class SQL:
 
@@ -76,6 +81,20 @@ class SQL:
 
         """
         self.session.bulk_insert_mappings(SystemMachine, list_system_machine, return_defaults=True) #RETORNAR CHAVE QUANDO INSERIR
+        self.session.commit()
+        return list_system_machine
+
+    def insert_in_bulk_system_machine(self, list_system_machine: List[Dict[str, Any]]) -> List[Any]:
+        """ Insert the systems of machines in bulk
+
+            Args:
+                list_system_machine: List dictioranires of system machine thal will insert on database
+            Return:
+                The list of dictionaries of machine with machine id of database
+
+        """
+        self.session.bulk_insert_mappings(SystemMachine, list_system_machine,
+                                          return_defaults=True)  # RETORNAR CHAVE QUANDO INSERIR
         self.session.commit()
         return list_system_machine
 

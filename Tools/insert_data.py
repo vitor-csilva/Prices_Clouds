@@ -60,7 +60,7 @@ def insert_foreing_key(systems_machine: Dict[Any,Any], machines_insert: List[Any
             dict_aux['machine_id'] = machine_id
             systems_machine_insert.append(dict_aux)
 
-    return  systems_machine_insert
+    return systems_machine_insert
 
 
 def struct_pric_machine(pric: Dict[str, Any]) -> List[Any]:
