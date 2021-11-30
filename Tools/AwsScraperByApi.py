@@ -57,7 +57,7 @@ def build_request(operational_systems, pre_installed_sws, locations):
 def search():
     session = boto3.Session(region_name="us-east-1")
     pricing = session.client('pricing')
-    sql = SQL("root", "M!nerv%40123", "localhost", "clouds")
+    sql = SQL("root", "123456", "localhost", "clouds")
     operational_systems = pricing.get_attribute_values(ServiceCode='AmazonEC2', AttributeName='operatingSystem') # get systems names
     pre_installed_sws = pricing.get_attribute_values(ServiceCode='AmazonEC2', AttributeName='preInstalledSw')# get software pre installed
     locations = pricing.get_attribute_values(ServiceCode='AmazonEC2', AttributeName='location') # get locations of machines ec2
