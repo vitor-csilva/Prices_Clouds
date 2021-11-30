@@ -72,6 +72,7 @@ def struct_pric_machine(pric: Dict[str, Any]) -> List[Any]:
                 "price": price,
                 "region": region,
                 "system_name": name_sytem,
+                "type_machine": "OnDemand",
                 "machine_id": None,
             })
     return list_system
@@ -96,7 +97,6 @@ def struct_json_insert(data: Dict[str, Any], create_db=False, keys_remove=None):
     systems_machine_insert = insert_foreing_key(systems_machine, machines_insert)
     sql.insert_in_bulk_system_machine(systems_machine_insert)
 
-
 def insert(path: str):
     lista_arquivos2 = ['aws_ondemand.json']
 
@@ -106,7 +106,7 @@ def insert(path: str):
                 caminho = os.path.abspath(f"{pasta}/{nome_arquivo}")
                 with open(caminho) as f:
                     data = json.load(f)
-                    struct_json_insert(data, False)
+                    struct_json_insert(data, True)
 
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ class Machine(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     machine_name = Column(VARCHAR(256))
     memory       = Column(VARCHAR(256))
-    cpu          = VARCHAR(VARCHAR(256))
+    cpu          = Column(VARCHAR(256))
     storage      = Column(VARCHAR(256))
     processor    = Column(VARCHAR(256))
     colection_data = Column(DateTime)
@@ -101,6 +101,36 @@ class SQL:
     def create_tables_database(self):
         """Create all tables of database"""
         Base.metadata.create_all(self.engine)
+
+    def find_machine(self, num_cpu:str, memory:str,type_machine="OnDemand", region=""):
+
+        """ Function for find machine
+          Args:
+                num_cpu: number of core machine
+                memory: List dictioranires of system machine that will insert on database
+                region: Optional argument
+            Return:
+                The list of dictionaries of machine filtered
+        """
+
+        query = select(
+            Machine.cpu, Machine.machine_name, Machine.memory,
+            SystemMachine.region, SystemMachine.price, SystemMachine.system_name,
+            SystemMachine.type_machine
+        ).filter(
+            Machine.memory == memory).filter(Machine.cpu == num_cpu).join(
+            SystemMachine).filter(SystemMachine.type_machine.like(f"%{type_machine}%"))
+        if region:
+            query = query.filter(SystemMachine.region.like(f"%{region}%"))
+
+        query = query.order_by(asc(SystemMachine.price))
+        return self.conn.execute(query)
+
+
+
+
+
+
 
 
 
