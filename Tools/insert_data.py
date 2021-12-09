@@ -82,7 +82,7 @@ def struct_json_insert(data: Dict[str, Any], create_db=False, keys_remove=None):
     systems_machine = {}
     colection_data = datetime.strptime(data['_id']['$date'].split('.')[0], '%Y-%m-%dT%H:%M:%S')
     data.pop('_id', None)
-    sql = SQL("root", "M!nerv%40123", "localhost", "clouds")
+    sql = SQL("root", "123456", "localhost", "clouds")
     if create_db:
         sql.create_tables_database()
     cont = 0
@@ -110,4 +110,4 @@ def insert(path: str):
 
 
 if __name__ == '__main__':
-    insert("C:\\Users\\wanderson.viana\\Downloads\\Prices_Clouds\\Prices_Clouds")
+    insert("C:\\tcc\\arquivos-tcc")
